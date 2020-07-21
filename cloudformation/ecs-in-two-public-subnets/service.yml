@@ -99,6 +99,9 @@ Resources:
           Cpu: !Ref 'ContainerCpu'
           Memory: !Ref 'ContainerMemory'
           Image: !Ref 'ImageUrl'
+          MountPoints:
+            - SourceVolume: rexray-vol
+              ContainerPath: /var/lib/ebs/data
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
           LogConfiguration:
@@ -107,7 +110,15 @@ Resources:
               awslogs-group: !Ref 'ServiceName'
               awslogs-region: !Ref AWS::Region
               awslogs-stream-prefix: !Ref 'ServiceName'
-
+      Volumes:
+        - Name: rexray-vol
+          DockerVolumeConfiguration:
+            Autoprovision: true
+            Scope: shared
+            Driver: rexray/ebs
+            DriverOpts:
+              volumetype: gp2
+              size: 5
   Service:
     Type: AWS::ECS::Service
     DependsOn: LoadBalancerRule
