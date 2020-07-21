@@ -1,3 +1,3 @@
 # ebs-lab
 
-Reference: https://reflectoring.io/aws-cloudformation-deploy-docker-image/
+Reference: https://github.com/thombergs/code-examples
